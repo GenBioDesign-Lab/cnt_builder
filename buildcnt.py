@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-buildCstruct 2.0 - Armchair CNT with Modern Architecture
+buildcnt.py - build armchair CNT structures
 
 Modified for Python 3 with argparse and enhanced functionalization
 Modified by: mdanh
