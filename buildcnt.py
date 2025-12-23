@@ -437,11 +437,14 @@ def add_H(coords, natx, funct_OH):
     Oy1 = cobond*sin(120/2*pi/180)
 
     if funct_OH:
-        h1charge = 0.18
-        o1charge = -0.53
-        h2charge = 0.37
+        c_oh_charge = 0.11    # C bonded to OH group
+        o1charge = -0.53      # O bonded to H
+        h2charge = 0.42       # H bonded to O
+        c_h_charge = -0.115   # C bonded to H (passivating)
+        h1charge = 0.115      # H bonded to C (passivating)
     else:
-        h1charge = 0.13
+        c_h_charge = -0.115   # C bonded to H
+        h1charge = 0.115      # H bonded to C
 
     for i in range(natx):  # upper border
         Hx1 = Hxz*cos(i*2*pi/natx)
@@ -453,6 +456,8 @@ def add_H(coords, natx, funct_OH):
         Hy2 = Oy1
 
         if modf(float(i)/2.0)[0] == 0 and funct_OH:
+            # Update carbon charge for C bonded to OH
+            coords[i][5] = c_oh_charge
             tmpcoords = ['O']
             tmpcoords.append(coords[i][1]+Ox1) 
             tmpcoords.append(coords[i][2]+Oy1)
@@ -468,6 +473,8 @@ def add_H(coords, natx, funct_OH):
             tmpcoords.append(h2charge)
             coords.append(tmpcoords)
         else:
+            # Update carbon charge for C bonded to H
+            coords[i][5] = c_h_charge
             tmpcoords = ['H']
             tmpcoords.append(coords[i][1]+Hx1) 
             tmpcoords.append(coords[i][2]+Hy1)
@@ -489,6 +496,8 @@ def add_H(coords, natx, funct_OH):
         Hx2 = Ox1+ohbond*cos(i*2*pi/natx)
         Hz2 = Oz1+ohbond*sin(i*2*pi/natx)
         if modf(float(i)/2.0)[0] == 0 and funct_OH:
+            # Update carbon charge for C bonded to OH
+            coords[i][5] = c_oh_charge
             tmpcoords = ['O']
             tmpcoords.append(coords[i][1]+Ox1)  # update x even
             tmpcoords.append(coords[i][2]-Oy1)
@@ -504,6 +513,8 @@ def add_H(coords, natx, funct_OH):
             tmpcoords.append(h2charge)
             coords.append(tmpcoords)
         else:
+            # Update carbon charge for C bonded to H
+            coords[i][5] = c_h_charge
             tmpcoords = ['H']
             tmpcoords.append(coords[i][1]+Hx1)  # update x odd
             tmpcoords.append(coords[i][2]-Hy1)
